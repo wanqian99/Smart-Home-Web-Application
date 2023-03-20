@@ -1,0 +1,265 @@
+/* set the font for the web app */
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #464663;
+}
+
+/* nav bar container */
+nav {
+    overflow: hidden;
+    background-color: white;
+    border: 8px solid white;
+    border-radius: 10px;
+    width: 95%;
+    margin: 15px auto 0px auto;
+}
+
+/* nav bar a links */
+nav a {
+    float: right;
+    color: #464663;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 10px;
+}
+
+/* nav bar first a link */
+nav a:first-child {
+    float: left;
+}
+
+/* nav bar a links when hovered */
+nav a:hover {
+    text-decoration: underline;
+    text-decoration-color: #464663;
+    text-decoration-thickness: 2px;
+}
+
+/* nav bar a links when active */
+nav a.active {
+    background-color: #464663;
+    border-radius: 8px;
+    color: white;
+}
+
+/* contents container*/
+.content {
+    display: block;
+    float: left;
+    background-color: white;
+    border: 8px solid white;
+    border-radius: 10px;
+    width: 95%;
+    height: auto;
+    margin: 15px 2% 0px 2%;
+    font-size: 14px;
+}
+
+
+
+/*******************INDEX.HTML and ABOUT.HTML********************/
+/* about page and index page contents style */
+.content .about {
+    width: 95%;
+    margin: 10px;
+}
+
+
+
+/*******************AddDevice.HTML and DEVICE.HTML********************/
+/* hide the original checkbox */
+.status input {
+    position: absolute;
+    z-index: -1;
+    display: none;
+}
+
+/* new toggle slider for the checkbox */
+.slider {
+    display: block;
+    position: relative;
+    float: right;
+    cursor: pointer;
+    width: 90px;
+    height: 39px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+    border: 3px solid #464663;
+}
+
+/* toggle slider style */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 28px;
+    width: 28px;
+    left: 5px;
+    bottom: 5px;
+    background-color: #464663;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* toggle slider when checked */
+input:checked + .slider {
+    background-color: #464663;
+    border-color: #464663;
+}
+
+/* toggle slider when checked */
+input:checked + .slider:before {
+    background-color: white;
+    -webkit-transform: translateX(52px);
+    -ms-transform: translateX(52px);
+    transform: translateX(52px);
+}
+
+/* toggle slider style when checked */
+.on {
+    display: none;
+    color: white;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 28%;
+    font-size: 14px;
+}
+
+/* toggle slider style when not checked */
+.off {
+    color: #464663;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 65%;
+    font-size: 14px;
+}
+
+/* display toggle slider style when checked */
+input:checked + .slider .on {
+    display: block;
+}
+
+/* dont display toggle slider style when not checked */
+input:checked + .slider .off {
+    display: none;
+}
+
+
+
+/*******************DEVICE.HTML********************/
+/* boxes in the content container style */
+.content .boxes {
+    float: left;
+    width: 95%;
+    text-align: center;
+    vertical-align: middle;
+    /* line-height: 150px; */
+}
+
+/* button to activate modal style */
+.content .boxes .deviceBtn {
+    float: left;
+    color: black;
+    font-size: 18px;
+    background-color: white;
+    border: 5px solid #464663;
+    border-radius: 15px;
+    width: 150px;
+    height: 150px;
+    margin: 12px;
+}
+
+/* button to activate modal style when hovered */
+.content .boxes .deviceBtn:hover,
+.content .boxes .deviceBtn:focus {
+    color: white;
+    background-color: #464663;
+    border: 5px solid #464663;
+}
+
+/* The Modal (background) */
+/* hide the modal by default, only display when the button is clicked */
+.boxes .modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 12%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+  
+/* Modal Content */
+.boxes .modal .modal-content {
+    background-color: white;
+    margin: auto;
+    border: 3px solid #464663;
+    border-radius: 10px;
+    width: 60%;
+    height: auto;
+}
+
+/* Modal Content p */
+.boxes .modal .modal-content p{
+    padding: 0%;
+    margin: 0%;
+}
+  
+/* The Close Button */
+.boxes .modal .modal-content .close {
+    color: white;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* The Close Button when hovered and focused */
+.boxes .modal .modal-content .close:hover,
+.boxes .modal .modal-content .close:focus {
+    color: #464663;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+/*******************AddDEVICE.HTML********************/
+/* device input form style */
+.content .form {
+    padding: 5%;
+    text-align: left;
+}
+
+/* dont display the form fields first by default */
+.content .fields {
+    display: none;
+}
+
+/* submit button style */
+.content input[type=submit] {
+    margin-top: 2%;
+    margin-right: 2%;
+    font-size: 15px;
+    background-color: white;
+    color: #464663;
+    border: 3px solid #464663;
+    border-radius: 20px;
+    width: 150px;
+    height: 40px;
+}
+
+/* submit button when hovered style */
+.content input[type=submit]:hover {
+    background-color: #464663;
+    color: white;
+    border: 0;
+}

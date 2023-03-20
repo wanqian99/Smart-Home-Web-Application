@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+    <head>
+        <script type = "text/javascript" src="/scripts.js"></script>
+        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+            integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Device</title>
+    </head>
+
+    <body>
+        <nav>
+            <a href="/"><i class="fas fa-laptop-house">&nbsp;&nbsp;</i>SmartHome</a>
+            <a href="/about">About</a>
+            <a href="/addDevice" class="active">Add Device</a>
+            <a href="/device">Device</a>
+        </nav>
+
+        <div class="content">
+            <!-- this is the add device page -->
+            <!-- when this form is submitted, it calls the inputValidation function,
+                 which returns a boolean value of either true or false. 
+                 This function checks if the input values are valid and not null -->
+            <form method="POST" action="/addDevice" name="form" class="form"  onSubmit="return inputValidation()">
+                <!-- checkbox for the status of the device -->
+                <label class="status">
+                    <input type="checkbox" name="status" id="status" value="On" checked>
+                    <div class="slider">
+                        <span class="on">ON</span>
+                        <span class="off">OFF</span>
+                    </div>
+                </label>
+
+                <!-- dropdown selection for the device types -->
+                <label for="type">Device Type:</label>
+                <select id="type" name="type" onchange="typefunc(value)">
+                    <option value="" selected disabled hidden>Choose a Device Type</option>
+                    <option value="Living Room Lights">Living Room Lights</option>
+                    <option value="Television">Television</option>
+                    <option value="Living Room Curtain">Living Room Curtain</option>
+                    <option value="Audio Speaker">Audio Speaker</option>
+                    <option value="Oven">Oven</option>
+                    <option value="Air Conditioner">Air Conditioner</option>
+                    <option value="Rice Cooker">Rice Cooker</option>
+                    <option value="Living Room Fan">Living Room Fan</option>
+                    <option value="Alarm Clock">Alarm Clock</option>
+                    <option value="Smart Door Lock">Smart Door Lock</option>
+                    <option value="Radio">Radio</option>
+                    <option value="Refrigerator">Refrigerator</option>
+                    <option value="BathTub">BathTub</option>
+                    <option value="Microwave">Microwave</option>
+                    <option value="Heating System">Heating System</option>
+                    <option value="Kitchen Blinds">Kitchen Blinds</option>
+                    <option value="Air Purifier">Air Purifier</option>
+                    <option value="WiFi">WiFi</option>
+                    <option value="CCTV">CCTV</option>
+                    <option value="Motion Sensor">Motion Sensor</option>
+                </select>
+
+                <br><br>
+
+                <!-- input text box for the device name -->
+                <label for="name" id="name" class="fields">Device Name: 
+                    <input type="text" name="name" placeholder="Enter Device Name">
+                    <br><br>
+                </label>
+                <!-- slider for the brightness value -->
+                <label for="brightness" id="brightness" class="fields">
+                    <p id="brightnessVal">Brightness:</p>
+                    <input type="range" name="brightness" max="5" value="0" onclick="addbrightnessfunc(this.value)">
+                    <br><br>
+                </label>
+                <!-- slider for the volume value -->
+                <label for="volume" id="volume" class="fields">
+                    <p id="volumeVal">Volume:</p>
+                    <input type="range" name="volume" max="50" value="0" onclick="addvolumefunc(this.value)">
+                    <br><br>
+                </label>
+                <!-- input text box for the channel value -->
+                <label for="channel" id="channel" class="fields">Channel:
+                    <input type="number" name="channel" max="20" placeholder="Enter a Channel: 1-20">
+                    <br><br>
+                </label>
+                <!-- input time type -->
+                <label for="time" id="time" class="fields">Time:
+                    <input type="time" id="startTime" name="startTime" placeholder="Enter a start time">
+                    -
+                    <input type="time" id="endTime" name="endTime" placeholder="Enter a end time">
+                    <br><br>
+                </label>
+                <!-- input text box for the song track -->
+                <label for="track" id="track" class="fields">Track:
+                    <input type="text" name="track" placeholder="Enter a song track">
+                    <br><br>
+                </label>
+                <!-- input text box for the timer value -->
+                <label for="timer" id="timer" class="fields">Timer:
+                    <input type="number" name="timer" max="90" placeholder="Enter a number: 1-120"> mins
+                    <br><br>
+                </label>
+                <!-- input text box for the temperature value -->
+                <label for="temperature" id="temperature" class="fields">Temperature:
+                    <input type="number" name="temperature" max="180" placeholder="Enter temperature: 1-180"> °C
+                    <br><br>
+                </label>
+                <!-- slider for the slider value -->
+                <label for="speed" id="speed" class="fields">
+                    <p id="speedVal">Speed:</p>
+                    <input type="range" name="speed" max="5" value="0" onclick="addspeedfunc(this.value)">
+                    <br><br>
+                </label>
+                <!-- input text box for the water volume value -->
+                <label for="water_vol" id="water_vol" class="fields">Water Volume:
+                    <input type="number" name="water_vol" max="50" placeholder="Enter water volume: 1-50"> Litres
+                    <br><br>
+                </label>
+                <br>
+                <!-- submit button -->
+                <input type="submit" class="submit" value="SUBMIT">
+            </form>
+        </div>
+    </body>
+</html>

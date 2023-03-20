@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+    <head>
+        <script type = "text/javascript" src="/scripts.js"></script>
+        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+            integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Device</title>
+    </head>
+
+    <body>
+        <nav>
+            <a href="/"><i class="fas fa-laptop-house">&nbsp;&nbsp;</i>SmartHome</a>
+            <a href="/about">About</a>
+            <a href="/addDevice">Add Device</a>
+            <a href="/device" class="active">Device</a>
+        </nav>
+
+        <div class="content">
+            <!-- this is the device list page -->
+            <div class="boxes">
+                <!-- parse the result from the database table 'device' to a template -->
+                <%for(var i=0;i<result.length;i++){%>
+                    <!-- button that displays the modal as clicked -->
+                    <!-- displays the device type and status on the button -->
+                    <button class="deviceBtn" id="deviceBtn">
+                        <b><%=result[i].type%></b>
+                        <br><br>
+                        <i>Status: <%=result[i].status%></i>
+                    </button>
+
+                    <div id="myDevice" class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+
+                            <!-- form that shows the device details -->
+                            <!-- form allows updating and deleting of the device data -->
+                            <!-- when this form is submitted, it calls the inputValidation function,
+                                 which returns a boolean value of either true or false. 
+                                 This function checks if the input values are valid and not null -->
+                            <form method="POST" action="/deleteDevice" class="form" onSubmit="return updateValidation()">
+
+                                <!-- an id that is hidden, and will be used when deleting the device from the database -->
+                                <input type="hidden" name="id" id="id" value=<%=result[i].id%>>
+
+                                <!-- checkbox for the status of the device -->
+                                <!-- checkbox is checked by default -->
+                                <label class="status">
+                                    <input type="checkbox" name="status" id="status" value=<%=result[i].status%> checked>
+                                    <div class="slider">
+                                        <span class="on">ON</span>
+                                        <span class="off">OFF</span>
+                                    </div>
+                                </label>
+                    
+                                <!-- dropdown selection for the device types -->
+                                <!-- only shows the device type that is parsed in from the database,
+                                     to not allow changes in device type -->
+                                <label for="type">Device Type:</label>
+                                <select id="type" name="type">
+                                    <option value="<%=result[i].type%>"> <%=result[i].type%></option>
+                                </select>
+                                <br><br>
+
+                                <!-- input text box for the device name -->
+                                <label for="name" id="name">Device Name: 
+                                    <input type="text" name="name" value="<%=result[i].name%>">
+                                    <br><br>
+                                </label>
+
+                                <!-- slider for the brightness value -->
+                                <!-- only show the slider if the input is not 0 -->
+                                <% if (result[i].brightness != "0") { %>
+                                    <label for="brightness" id="brightness">
+                                        <p id="brightnessVal">Brightness: <%=result[i].brightness%></p>
+                                        <input type="range" name="brightness" max="5" oninput="brightnessfunc(this.value)" value="<%=result[i].brightness%>">
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="range" name="brightness" max="5" value="0" style="display: none;"/>
+                                <% } %>
+
+                                <!-- slider for the volume value -->
+                                <!-- only show the slider if the input is not 0 -->
+                                <% if (result[i].volume != "0") { %>
+                                    <label for="volume" id="volume">
+                                        <p class="volumeVal">Volume: <%=result[i].volume%></p>
+                                        <input type="range" name="volume" max="50" oninput="volumefunc(this.value)" value="<%=result[i].volume%>">
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="range" name="volume" max="50" value="0" style="display: none;">
+                                <% } %>
+                                
+                                <!-- input text box for the channel value -->
+                                <!-- only show the text box if the input is not 0 -->
+                                <% if (result[i].channel != "0") { %>
+                                    <label for="channel" id="channel">Channel:
+                                        <input type="number" name="channel" max="20" value="<%=result[i].channel%>">
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="text" name="channel" max="20" value="0" style="display: none;">
+                                <% } %>
+
+                                <!-- input time type for the startTime and endTime value -->
+                                <!-- only show the input time type if the input is not null -->
+                                <% if (result[i].startTime != "" && result[i].endTime != "") { %>
+                                    <label for="time" id="time">Time:
+                                        <input type="time" id="startTime" name="startTime" value="<%=result[i].startTime%>">
+                                        -
+                                        <input type="time" id="endTime" name="endTime" value="<%=result[i].endTime%>">
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>
+                                    <label for="time" id="time" style="display: none;">Time:
+                                        <input type="time" id="startTime" name="startTime" value="0" style="display: none;">
+                                        <input type="time" id="endTime" name="endTime" value="0" style="display: none;">
+                                    </label>
+                                <% } %>
+
+                                <!-- input text box for the track value -->
+                                <!-- only show the text box if the input is not 0 -->
+                                <% if (result[i].track != "0") { %>
+                                    <label for="track" id="track">Track:
+                                        <input type="text" name="track" value="<%=result[i].track%>">
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="text" name="track" value="0" style="display: none;">
+                                <% } %>
+
+                                <!-- input text box for the timer value -->
+                                <!-- only show the text box if the input is not 0 -->
+                                <% if (result[i].timer != "0") { %>
+                                    <label for="timer" id="timer">Timer:
+                                        <input type="number" name="timer" max="90" value="<%=result[i].timer%>"> mins
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="text" name="timer" max="90" value="0" style="display: none;">
+                                <% } %>
+
+                                <!-- input text box for the temperature value -->
+                                <!-- only show the text box if the input is not 0 -->
+                                <% if (result[i].temperature != "0") { %>
+                                    <label for="temperature" id="temperature">Temperature:
+                                        <input type="number" name="temperature" max="180" value="<%=result[i].temperature%>"> °C
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="text" name="temperature" max="180" value="0" style="display: none;">
+                                <% } %>
+
+                                <!-- slider for the speed value -->
+                                <!-- only show the slider if the input is not 0 -->
+                                <% if (result[i].speed != "0") { %>
+                                    <label for="speed" id="speed" class="fields">
+                                        <p id="speedVal">Speed: <%=result[i].speed%></p>
+                                        <input type="range" name="speed" max="5" oninput="speedfunc(this.value)" value="<%=result[i].speed%>">
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="range" name="speed" max="5" value="0" style="display: none;">
+                                <% } %>
+
+                                <!-- input text box for the water_vol value -->
+                                <!-- only show the text box if the input is not 0 -->
+                                <% if (result[i].water_vol != "0") { %>
+                                    <label for="water_vol" id="water_vol">Water Volume:
+                                        <input type="number" name="water_vol" max="50" value="<%=result[i].water_vol%>"> Litres
+                                        <br><br>
+                                    </label>
+                                <% } else{ %>  
+                                    <input type="number" name="water_vol" max="50" value="0" style="display: none;">
+                                <% } %>
+                                <br><br>
+                                <!-- 2 submit button that updates or deletes the device values -->
+                                <!-- when the button is clicked, it calls the checkWithUser function,
+                                     which returns a boolean value of either true or false.
+                                     This function checks with the user if they want to continue updating or deleting the device -->
+                                <input type="submit" formmethod="POST" formaction="/device" class="update" value="UPDATE" onSubmit="return checkWithUser()">
+                                <input type="submit" class="delete" value="DELETE" onSubmit="return checkWithUser()">
+                            </form>
+                        </div>
+                    </div>
+                <%}
+                %>
+            </div>
+        </div>
+        <script>
+            // Get the modal
+            var modal = document.getElementsByClassName("modal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementsByClassName("deviceBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close");
+
+            //add an data-index attribute to the btn, modal and span elements
+            function setDataIndex() {
+
+                for (i = 0; i < btn.length; i++)
+                {
+                    btn[i].setAttribute('data-index', i);
+                    modal[i].setAttribute('data-index', i);
+                    span[i].setAttribute('data-index', i);
+                }
+            }
+
+            for (i = 0; i < btn.length; i++)
+            {
+                // When the user clicks the button, open the modal
+                btn[i].onclick = function() {
+                    var ElementIndex = this.getAttribute('data-index');
+                    modal[ElementIndex].style.display = "block";
+                };
+
+                // When the user clicks on <span> (x), close the modal
+                span[i].onclick = function() {
+                    var ElementIndex = this.getAttribute('data-index');
+                    modal[ElementIndex].style.display = "none";
+                };
+            }
+
+            //calls the setDataIndex function onload
+            window.onload = function() {
+                setDataIndex();
+            };
+
+            //when clicked, open the respective modal window based on the button clicked and dont display the other modals
+            window.onclick = function(event) {
+                if (event.target === modal[event.target.getAttribute('data-index')]) {
+                    modal[event.target.getAttribute('data-index')].style.display = "none";
+                }
+            }
+        </script>
+    </body>
+</html>
